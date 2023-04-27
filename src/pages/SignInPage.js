@@ -73,10 +73,11 @@ const SingInContainer = styled.section`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   h1{
     font-size: 60px;
+    margin-bottom: 15%;
+    margin-top: 5%;
   }
 `
 const Form = styled.form``
