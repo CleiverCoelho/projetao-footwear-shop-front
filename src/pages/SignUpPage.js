@@ -6,7 +6,7 @@ import api from "../services/api";
 
 export default function SignUpPage() {
 
-  const [formData, setFormData] = useState({name:'', email:'', password:'', confirmPassword:''});
+  const [formData, setFormData] = useState({name:'', email:'', password:'', confirmPassword:'', rua: "", numero: "", complemento: "", cidade: "", estado: ""});
   const navigate = useNavigate();
 
 
@@ -74,6 +74,44 @@ export default function SignUpPage() {
         value={formData.confirmPassword}
         required
         />
+        
+        <h2>Endereço</h2>
+
+        <h1>Endereço</h1>
+        <Input  
+        name="rua"
+        placeholder="Rua"
+        value={formData.rua}
+        required
+        onChange={handleChange}/>
+
+       <Input25
+        name="numero"
+        placeholder="Número"
+        value={formData.numero}
+        required
+        onChange={handleChange}/>
+
+       <Input75
+        name="complemento"
+        placeholder="Complemento"
+        value={formData.complemento}
+        required
+        onChange={handleChange}/>
+
+       <Input 
+        name="cidade"
+        placeholder="Cidade"
+        value={formData.cidade}
+        required
+        onChange={handleChange}/>
+
+      <Input 
+        name="estado"
+        placeholder="Estado"
+        value={formData.estado}
+        required
+        onChange={handleChange}/>
 
         <Button type="submit">Cadastrar</Button>
       </Form>
@@ -93,6 +131,12 @@ const SingUpContainer = styled.section`
   align-items: center;
   h1{
     font-size: 60px;
+    margin-bottom: 15%;
+    margin-top: 5%;
+  }
+
+  h2{
+    font-size: 50px;
     margin-bottom: 15%;
     margin-top: 5%;
   }
