@@ -5,6 +5,7 @@ import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import UserProvider from "./contexts/UserContext";
 import CartPage from "./pages/CartPage";
+import ProductPage from "./pages/ProductPage";
 
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/product/:id" element={<ProductPage/>} />
         </Routes>
         </UserProvider>
       </BrowserRouter>

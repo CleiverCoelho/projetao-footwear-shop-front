@@ -2,6 +2,8 @@ import styled from "styled-components"
 import api from "../services/api";
 import {AiOutlineHeart, AiOutlineUser, AiOutlinePlusCircle, AiOutlineMinusCircle} from "react-icons/ai"
 import fotoTemplate from "./foto_template.jpg"
+import React from "react";
+import { Link } from "react-router-dom";
 
 export default function CartPage () {
     
@@ -14,7 +16,22 @@ export default function CartPage () {
 
             <ProductsContainer>
 
-                <ItemContainer>
+                <Item id={1}></Item>
+
+            </ProductsContainer>
+        </CartPageContainer>
+        
+    )
+}
+
+function Item ({id}) {
+
+    const [idItem, setIdItem] = React.useState(id)
+
+    console.log(id)
+    return (
+        <Link to="product/id">
+            <ItemContainer>
                     <ProductInfoContainer>
                         <img src={fotoTemplate}></img>
                         <div>
@@ -36,32 +53,7 @@ export default function CartPage () {
                         </PriceInfo>
                     </PriceInfoContainer>
                 </ItemContainer>
-                
-                <ItemContainer>
-                <ProductInfoContainer>
-                        <img src={fotoTemplate}></img>
-                        <div>
-                            <ProductName>Tenis Adidas Casual</ProductName>
-                            <ProductInfo>Vendido e entregue por FootwearShop</ProductInfo>
-                            <ProductInfo><span>Tamanho:</span> 40</ProductInfo>
-                            <ProductInfo><span>Cor:</span> Preto+Branco</ProductInfo>
-                        </div>
-                    </ProductInfoContainer>
-                    <DivisionLine></DivisionLine>
-                    <PriceInfoContainer>
-                        <QuantityContainer>
-                            <AiOutlineMinusCircle></AiOutlineMinusCircle>
-                            2
-                            <AiOutlinePlusCircle></AiOutlinePlusCircle>
-                        </QuantityContainer>
-                        <PriceInfo>
-                            R$ 299,00 ou <br/>R$ 284,00 no pix
-                        </PriceInfo>
-                    </PriceInfoContainer>
-                </ItemContainer>
-
-            </ProductsContainer>
-        </CartPageContainer>
+        </Link>
         
     )
 }

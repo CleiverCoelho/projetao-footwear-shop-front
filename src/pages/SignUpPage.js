@@ -85,7 +85,7 @@ export default function SignUpPage() {
         required
         onChange={handleChange}/>
 
-       <Input25
+       {/* <Input25
         name="numero"
         placeholder="Número"
         value={formData.numero}
@@ -97,7 +97,7 @@ export default function SignUpPage() {
         placeholder="Complemento"
         value={formData.complemento}
         required
-        onChange={handleChange}/>
+        onChange={handleChange}/> */}
 
        <Input 
         name="cidade"
