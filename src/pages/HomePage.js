@@ -4,7 +4,37 @@ import {GiConverseShoe, GiShoppingCart} from "react-icons/gi"
 
 
 export default function HomePage () {
+
+    const [produtos, setProdutos] = useState([]);
+    const { auth } = useContext(AuthContext);
+
+    useEffect(() => {
+        axios.get("/produtos", {headers:{
+            "Authorization": `Bearer ${auth.token}`
+          }})
+        .then(
+            (res) => {setProdutos(res.data)}
+        )
+        .catch(
+            (err) => {alert(err.response.status)}
+        )
+    }, [])
+
+    function getProductsbybrand(e){
+        let brand = e.target.id;
+        axios.get(`/produtos/${brand}`, {headers:{
+            "Authorization": `Bearer ${auth.token}`
+          }})
+          .then(
+            (res) => {setProdutos(res.data)}
+          )
+          .catch(
+            (err) => {alert(err.response.status)}
+        )
+    }
+
     return (
+        <>
         <Header>
             <GiConverseShoe style={{
                     marginLeft: "10px",
@@ -30,6 +60,16 @@ export default function HomePage () {
                 }}></GiShoppingCart>
             </div>
         </Header>
+        <Banner />
+        <Homeh1>Mais vendidos</Homeh1>
+        <ProductContainer>
+            {produtos.map(
+                (p) => <Produto imagem={p.image} nome={p.name} valor={p.valor} />
+            )}
+        </ProductContainer>
+        <Footer onClick={getProductsbybrand} />
+        </>
+
     )
 }
 
@@ -52,4 +92,32 @@ const Header = styled.div`
         justify-content: space-between;
 
     }
+`
+
+const Banner = styled.img``
+
+const Homeh1 = styled.h1`
+`
+
+const ProductsContainer = styled.div`
+width: 100%;
+display: flex;
+gap: 2%;
+flex-wrap: wrap;
+
+`
+
+const Produto = (props) => {
+
+    return(
+        <ProdutoWrapper>
+            <img src={props.imagem} />
+            <h1>{props.nome}</h1>
+            <h1>{props.valor}</h1>
+        </ProdutoWrapper>
+    )
+}
+
+const ProdutoWrapper = styled.div`
+
 `
