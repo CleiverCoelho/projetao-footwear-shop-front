@@ -1,40 +1,49 @@
-import styled from "styled-components"
+import styled from "styled-components";
 import {AiOutlineHeart, AiOutlineUser} from "react-icons/ai"
 import {GiConverseShoe, GiShoppingCart} from "react-icons/gi"
+import { useEffect, useState , useContext} from "react";
+
+import banner from "../assets/banner.png";
+import fotoTemplate from "./foto_template.jpg";
+import { UserContext } from "../contexts/UserContext";
 
 
 export default function HomePage () {
 
-    const [produtos, setProdutos] = useState([]);
-    const { auth } = useContext(AuthContext);
+    const [produtos, setProdutos] = useState([{image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
+    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
+    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
+    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"}, {image:{fotoTemplate}, name:"produto", valor:"199,99", color: "azul"}]);
+    //const { user } = useContext(UserContext);
 
-    useEffect(() => {
-        axios.get("/produtos", {headers:{
-            "Authorization": `Bearer ${auth.token}`
-          }})
-        .then(
-            (res) => {setProdutos(res.data)}
-        )
-        .catch(
-            (err) => {alert(err.response.status)}
-        )
-    }, [])
+    //useEffect(() => {
+   //    axios.get("/produtos", {headers:{
+    //        "Authorization": `Bearer ${user.token}`
+   //       }})
+   //    .then(
+   //         (res) => {setProdutos(res.data)}
+   //     )
+   //     .catch(
+   //         (err) => {alert(err.response.status)}
+   //     )
+   // }, [])
 
-    function getProductsbybrand(e){
-        let brand = e.target.id;
-        axios.get(`/produtos/${brand}`, {headers:{
-            "Authorization": `Bearer ${auth.token}`
-          }})
-          .then(
-            (res) => {setProdutos(res.data)}
-          )
-          .catch(
-            (err) => {alert(err.response.status)}
-        )
-    }
+   // function getProductsbybrand(e){
+    //    let brand = e.target.id;
+    //    axios.get(`/produtos/${brand}`, {headers:{
+     //       "Authorization": `Bearer ${user.token}`
+     //     }})
+     //     .then(
+     //       (res) => {setProdutos(res.data)}
+     //     )
+     //     .catch(
+     //       (err) => {alert(err.response.status)}
+     //   )
+    //}
 
     return (
         <>
+                
         <Header>
             <GiConverseShoe style={{
                     marginLeft: "10px",
@@ -60,25 +69,50 @@ export default function HomePage () {
                 }}></GiShoppingCart>
             </div>
         </Header>
-        <Banner />
-        <Homeh1>Mais vendidos</Homeh1>
-        <ProductContainer>
+
+        <HomeContent>
+
+        <Banner>
+            <img src={banner}/>
+        </Banner>
+        <ProductsContainer>
             {produtos.map(
-                (p) => <Produto imagem={p.image} nome={p.name} valor={p.valor} />
+                (p) => 
+                <Produto>
+                <img src={fotoTemplate}></img>
+                <DivisionLine></DivisionLine>
+                <h1>{p.name}</h1>
+                <DivisionLine></DivisionLine>
+                <h1>{p.valor}</h1>
+                <DivisionLine></DivisionLine>
+                </Produto>
             )}
-        </ProductContainer>
-        <Footer onClick={getProductsbybrand} />
+        </ProductsContainer>
+
+        </HomeContent>
+
         </>
 
     )
 }
 
+
+const HomeContent = styled.main`
+width: 100%;
+color: white;
+display: flex;
+flex-direction: column;
+align-items: center;
+
+
+`
+
 const Header = styled.div`
     width: 100%;
-    height: 20px;
+    height: 40px;
+    background-color: #b61c1c;
 
-    margin-top: 15px;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     display: flex;
@@ -93,30 +127,47 @@ const Header = styled.div`
 
     }
 `
-
-const Banner = styled.img``
-
-const Homeh1 = styled.h1`
-`
+const Banner = styled.div`
+ background-image: url(${banner});
+  background-size: cover;
+  background-position: center center;
+  img{
+    width: 100% ;
+    margin: 0 auto;
+  }
+  `
 
 const ProductsContainer = styled.div`
 width: 100%;
 display: flex;
-gap: 2%;
 flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+margin: 10px auto;
 
 `
 
-const Produto = (props) => {
-
-    return(
-        <ProdutoWrapper>
-            <img src={props.imagem} />
-            <h1>{props.nome}</h1>
-            <h1>{props.valor}</h1>
-        </ProdutoWrapper>
-    )
+const Produto = styled.div`
+width: 200px;
+height: 300px;
+margin-left: 10px;
+margin-right: 10px;
+img {
+    width: 90%;
+   
 }
+h1{
+    color: black;
+}
+`
+
+const DivisionLine = styled.div`
+    margin-top: 10px;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+`
+
 
 const ProdutoWrapper = styled.div`
 
