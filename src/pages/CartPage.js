@@ -16,8 +16,28 @@ export default function CartPage () {
             <ProductsContainer>
 
                 <Item id={1}></Item>
+                <Item id={2}></Item>
 
             </ProductsContainer>
+
+            <Footer>
+                <CartInfos>
+                    <div>
+                        Subtotal (2 itens)
+                    </div>
+                    <div>
+                        <span>
+                            R$ 299,90
+                        </span>
+                    </div>
+                </CartInfos>
+                <DivisionLine></DivisionLine>
+                <Buy>
+                    <div>
+                        Finalizar Compra               
+                    </div>
+                </Buy>
+            </Footer>
         </CartPageContainer>
         
     )
@@ -57,9 +77,57 @@ function Item ({id}) {
         
     )
 }
+const Buy = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        margin-top: 20px;
+        text-align: center;
+        width: 80%;
+        background-color: #b61c1c;
+        font-weight: 600;
+        color: black;
+        font-size: 26px;
+        border-radius: 5px;
+        color: white;
+    }
+`
+
+const CartInfos = styled.div`
+    font-weight: 500;
+    width: 90%;
+    height: 20px;
+    font-size: 18px;
+    color: black;
+    margin-left: 10px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    span {
+        font-weight: 600;
+        color: black;
+    }
+`
+
+const Footer = styled.div`
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    z-index: 1;
+    background-color: white;
+`
 
 const PriceInfoContainer = styled.div`
-    width: 400px;
+    width: 100%;
     height: 90px;
     display: flex;
     justify-content: space-between;
@@ -85,6 +153,7 @@ const PriceInfo = styled.div`
 const CartPageContainer = styled.div`
     width: 100%;
     height: 900px;
+    background-color: #b61c1c;
 `
 const ProductInfoContainer = styled.div`
     img{
@@ -105,7 +174,8 @@ const DivisionLine = styled.div`
 `
 
 const ProductName = styled.div`
-    width: 180px;
+    width: 85%;
+    /* background-color: black; */
     color: black;
     font-weight: 700;
     font-size: 18px;
@@ -125,25 +195,25 @@ const ProductInfo = styled.div`
 `
 const Header = styled.div`
     width: 100%;
-    height: 60px;
-    position: absolute;
-    left: 22px;
-    top: 20px;
+    height: 40px;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
     font-weight: 700;
     font-size: 28px;
+    padding: 20px;
     color: white;
-    /* background-color: white; */
+    background-color: #b61c1c;
 `
-
-
-
 const ProductsContainer = styled.div`
     width: 100%;
     height: 900px;
 
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 60px;
+    /* padding: 20px; */
 `
 const ItemContainer = styled.div`
     background-color: white;
@@ -151,4 +221,5 @@ const ItemContainer = styled.div`
     height: 180px;
     padding: 10px;
     margin-top: 20px;
+    /* background-color: black; */
 `

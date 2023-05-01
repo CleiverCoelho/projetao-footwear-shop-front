@@ -27,7 +27,7 @@ export default function ProductPage () {
     }
 
     function addItemOnCart(){
-        
+
     }
 
     return (
@@ -54,8 +54,8 @@ export default function ProductPage () {
                 </div>
             </Header>
             <ProductInfo>
-                <img src={fotoTemplate}></img>
-                <DivisionLine></DivisionLine>
+                <img src={fotoTemplate} alt="produto"></img>
+                {/* <DivisionLine></DivisionLine> */}
                 <ProductName>Tenis Adidas Casual</ProductName>
                 <DivisionLine></DivisionLine>
                 <ProductName>Cor: Preto e Branco</ProductName>
@@ -85,9 +85,10 @@ export default function ProductPage () {
 }
 
 const ListSizes = styled.div`
-    width: 100%;
+    width: 90%;
     height: 100px;
     margin-top: 10px;
+    margin-left: 10px;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -114,27 +115,30 @@ const Footer = styled.div`
     height: 50px;
     text-align: center;
     font-weight: 400;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+
     font-size: 24px;
-    margin-top: -1px;
     background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #b61c1c;
-    border: 1px solid #b61c1c;
-    border-radius: 5px;
     border: none;
     z-index: 2;
 `
 
 const ProductPrice = styled.div`
-    width: 100%;
+    width: 90%;
     height: 100px;
     font-weight: 700;
     font-size: 28px;
+    margin-left: 10px;
     color: white;
     margin-top: 20px;
-    margin-bottom: -1px;
+    margin-bottom: 50px;
     span {
         font-size: 16px;
     }
@@ -144,6 +148,7 @@ const ProductName = styled.div`
     font-weight: 700;
     font-size: 18px;
     color: white;
+    margin-left: 10px;
     margin-top: 20px;
 `
 
@@ -167,23 +172,22 @@ const ProductInfo = styled.div`
 
 const ProductContainer = styled.div`
     width: 100%;
-    height: auto;
-    margin-bottom: 900px;
+    height: 100%;
+    background-color: #b61c1c;
 `
 
 const Header = styled.div`
     width: 100%;
-    height: 20px;
+    height: 50px;
 
-    margin-top: 15px;
-    position: absolute;
+    position: fixed;
     z-index: 1;
     background-color: #b61c1c;
     top: 0;
     left: 0;
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
+    align-items: center;
     div {
         display: flex;
         align-items: center;

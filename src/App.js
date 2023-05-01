@@ -22,7 +22,7 @@ export default function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/product/:id" element={<ProductPage/>} />
+          <Route path="/product/:id/:from" element={<ProductPage/>} />
           <Route path="/address" element={<AddressPage/>} />
         </Routes>
 
@@ -35,4 +35,5 @@ export default function App() {
 const PagesContainer = styled.main`
   width: 100%;
   height: 100%;
+  box-sizing: border-box;
 `
