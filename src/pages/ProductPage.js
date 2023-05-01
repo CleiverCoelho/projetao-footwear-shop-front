@@ -4,12 +4,15 @@ import { GiShoppingCart } from "react-icons/gi"
 import styled from "styled-components"
 import fotoTemplate from "./foto_template.jpg"
 import React from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export default function ProductPage () {
 
+    const {id, from} = useParams();
     const [productSize, setProductSize] = React.useState();
     const [sizeSelected, setSizeSelected] = React.useState(false);
+    const navigate = useNavigate();
 
     // pegar id do produto por parametro e realizar requisicao
 
@@ -17,6 +20,14 @@ export default function ProductPage () {
         if(productSize){
             setProductSize(0);
         }
+    }
+
+    function goToLastPage (){
+        navigate(`/${from}`);
+    }
+
+    function addItemOnCart(){
+        
     }
 
     return (
@@ -28,7 +39,7 @@ export default function ProductPage () {
                         color: "white",
                         width: "30px",
                         height: "30px"
-                    }}/>
+                    }} onClick={goToLastPage}/>
                 <div>
                     <AiOutlineHeart style={{
                         color: "white",
@@ -63,11 +74,11 @@ export default function ProductPage () {
                     </ListSizes> }
                 <DivisionLine></DivisionLine>
                 <ProductPrice>R$ 227,99 <span>no pix</span> <br/><span>ou R$ R$ 239,99 em até 5x sem juros</span></ProductPrice>
+                <Footer onClick={addItemOnCart}>
+                    COMPRAR
+                </Footer>
 
             </ProductInfo>
-            <Footer>
-                COMPRAR
-            </Footer>
 
         </ProductContainer>
     )
@@ -101,18 +112,19 @@ const ListSizes = styled.div`
 const Footer = styled.div`
     width: 100%;
     height: 50px;
-    position: absolute;
-    bottom: -1;
-    left: 0;
-    z-index: 2;
     text-align: center;
     font-weight: 400;
     font-size: 24px;
+    margin-top: -1px;
+    background-color: white;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     color: #b61c1c;
+    border: 1px solid #b61c1c;
+    border-radius: 5px;
     border: none;
+    z-index: 2;
 `
 
 const ProductPrice = styled.div`
@@ -122,6 +134,7 @@ const ProductPrice = styled.div`
     font-size: 28px;
     color: white;
     margin-top: 20px;
+    margin-bottom: -1px;
     span {
         font-size: 16px;
     }
@@ -154,8 +167,8 @@ const ProductInfo = styled.div`
 
 const ProductContainer = styled.div`
     width: 100%;
-    height: 100%;
-    /* margin-bottom: 90px; */
+    height: auto;
+    margin-bottom: 900px;
 `
 
 const Header = styled.div`
@@ -163,7 +176,6 @@ const Header = styled.div`
     height: 20px;
 
     margin-top: 15px;
-    /* margin-bottom: 60000px; */
     position: absolute;
     z-index: 1;
     background-color: #b61c1c;

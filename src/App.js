@@ -20,7 +20,7 @@ export default function App() {
           <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/cart" element={<CartPage />} />
-          <Route path="/product/:id" element={<ProductPage/>} />
+          <Route path="/product/:id/:from" element={<ProductPage/>} />
         </Routes>
         </UserProvider>
       </BrowserRouter>
@@ -32,4 +32,5 @@ const PagesContainer = styled.main`
   background-color: #b61c1c;
   width: calc(100vw - 50px);
   max-height: 100vh;
-  padding: 25px;`
+  padding: 25px;
+`

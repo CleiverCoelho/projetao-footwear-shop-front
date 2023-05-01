@@ -6,8 +6,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function CartPage () {
-    
-    
+        
     return (
         <CartPageContainer>
             <Header>
@@ -27,11 +26,12 @@ export default function CartPage () {
 function Item ({id}) {
 
     const [idItem, setIdItem] = React.useState(id)
+    const [productQuantity, setProductQuantity] = React.useState(1);
 
-    console.log(id)
+    // console.log(id);
     return (
-        <Link to="product/id">
             <ItemContainer>
+                <Link to={`/product/${idItem}/cart`}>
                     <ProductInfoContainer>
                         <img src={fotoTemplate}></img>
                         <div>
@@ -41,19 +41,19 @@ function Item ({id}) {
                             <ProductInfo><span>Cor:</span> Preto+Branco</ProductInfo>
                         </div>
                     </ProductInfoContainer>
+                </Link>
                     <DivisionLine></DivisionLine>
                     <PriceInfoContainer>
                         <QuantityContainer>
-                            <AiOutlineMinusCircle></AiOutlineMinusCircle>
-                            2
-                            <AiOutlinePlusCircle></AiOutlinePlusCircle>
+                            <AiOutlineMinusCircle onClick={() => setProductQuantity(productQuantity - 1)}></AiOutlineMinusCircle>
+                            {productQuantity}
+                            <AiOutlinePlusCircle onClick={() => setProductQuantity(productQuantity + 1)}></AiOutlinePlusCircle>
                         </QuantityContainer>
                         <PriceInfo>
                             R$ 299,00 ou <br/>R$ 284,00 no pix
                         </PriceInfo>
                     </PriceInfoContainer>
                 </ItemContainer>
-        </Link>
         
     )
 }
@@ -116,6 +116,7 @@ const ProductInfo = styled.div`
     font-weight: 400;
     font-size: 14px;
     margin-top: 4px;
+    color: black;
 
     span {
         font-weight: 600;
