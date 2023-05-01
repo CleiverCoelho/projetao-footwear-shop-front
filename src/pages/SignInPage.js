@@ -70,6 +70,8 @@ export default function SignInPage() {
 }
 
 const SingInContainer = styled.section`
+background-color: #b61c1c;
+padding: 25px;
   height: 100vh;
   display: flex;
   flex-direction: column;

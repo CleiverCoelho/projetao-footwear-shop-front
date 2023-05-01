@@ -178,7 +178,7 @@ width: 74%
 const Input100container = styled.div`
 width: 100%;
 display: flex;
-gap: 2%.`
+gap: 2%`
 
 const ListadePedidos = styled.div`
 
