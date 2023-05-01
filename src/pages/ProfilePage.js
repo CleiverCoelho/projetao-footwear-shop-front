@@ -1,15 +1,17 @@
 import { useContext, useState, useEffect } from "react"
+import UserContext from "../contexts/UserContext2";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 
 export function ProfilePage(){
-  const [userData, setUserData] = useState({name: "", email: "", password: "", rua: "", numero: "", complemento: "", estado: "", cidade: "", pedidos: "" });
-  const [ editarendereço, setEditarEndereço] = useState(true);
+  const [userData, setUserData] = useState({name: "", email: "", password: "", pedidos: [] });
   const [ editardados, setEditarDados] = useState(true);
-  const { auth, login } = useContext(AuthContext);
+  const { user, login } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  if(!auth.token){
+  if(!user.token){
     navigate("/sign-in");
   }
 
@@ -21,19 +23,19 @@ export function ProfilePage(){
 
 
 
+
   function handleChange(e) {
   setUserData({ ...userData, [e.target.name]: e.target.value });
 }
 
-  function handleSubmit(e){
+  function salvarmudançasdados(e){
     e.preventDefault();
     setLoading(true);
     axios.put("users", userData,  {headers:{
-      "Authorization": `Bearer ${auth.token}`
+      "Authorization": `Bearer ${user.token}`
     }})
     .then(
-      //alterar editardados e editarendereço, talvez uma funçao maior que retorna outra com parametro e
-      (res) => {}
+      (res) => {setUserData(res.data);setEditarDados(true); setLoading(false)}
     )
     .catch(
       //tbm altera editar
@@ -43,7 +45,7 @@ export function ProfilePage(){
    
   useEffect(() => {
     axios.get("users", {headers:{
-      "Authorization": `Bearer ${auth.token}`
+      "Authorization": `Bearer ${user.token}`
     }})
     .then(
       (res) => {
@@ -60,20 +62,20 @@ export function ProfilePage(){
     <SingInContainer>
       <Form onSubmit={handleSubmit}>
         <h1>Dados Cadastrais</h1>
-        <Input  
+        <input  
         name="name"
         value={userData.name}
         disabled={!editardados}
         onChange={handleChange}/>
 
-       <Input 
+       <input 
         type="email" 
         name="email"
         value={userData.email}
         disabled={!editardados}
         onChange={handleChange}/>
 
-       <Input 
+       <input 
         name="password"
         disabled={!editardados}
         value={userData.password}
@@ -81,62 +83,22 @@ export function ProfilePage(){
         />
         {
             editar?
-            <Button onClick={salvarmudançasdados}>Salvar alterações</Button>
+            <button type="submit" onClick={salvarmudançasdados}>Salvar alterações</button>
             :
-            <Button onClick={() => setEditarDados(true)}>Alterar informações</Button>
+            <button onClick={() => setEditarDados(true)}>Alterar informações</button>
         }
-        <h1>Endereço</h1>
-        <Input  
-        name="rua"
-        value={userData.rua}
-        disabled={!editarendereço}
-        onChange={handleChange}
-        />
-        
-        <Input100container>
-
-        <Input25
-        name="numero"
-        value={userData.numero}
-        disabled={!editarendereço}
-        onChange={handleChange}/>
-
-       <Input75
-        name="complemento"
-        value={userData.complemento}
-        disabled={!editarendereço}
-        onChange={handleChange}/>
-        
-        </Input100container>
-
-       <Input 
-        name="cidade"
-        value={userData.cidade}
-        disabled={!editarendereço}
-        onChange={handleChange}/>
-
-      <Input 
-        name="estado"
-        value={userData.estado}
-        disabled={!editarendereço}
-        onChange={handleChange}/>
-        {
-            editar?
-            <Button onClick={salvarmudançasendereço}>Salvar alterações</Button>
-            :
-            <Button onClick={() => setEditarEndereço(false)}>Alterar informações</Button>
-        }
+        </Form>
         <h1>Pedidos</h1>
         <ListadePedidos>
             {
-                pedidos.map(
+                userData.pedidos.map(
                     (p) => <Pedido imagem={p.imagem} quantidade = {p.quantidade} valor = {p.valor} nome={p.nome} marca={p.brand} />
                 )
             }
         </ListadePedidos>
 
         
-      </Form>
+      
     </SingInContainer>
     )
 }
@@ -144,6 +106,7 @@ export function ProfilePage(){
 const SingInContainer = styled.section`
   height: 100vh;
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   h1{
@@ -152,8 +115,23 @@ const SingInContainer = styled.section`
     margin-top: 5%;
   }
 `
-const Form = styled.form``
-const Button = styled.button`
+const Form = styled.form`
+
+display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        width: 90%;
+      input{
+        border-radius: 30px;
+        outline: none;
+        border: 1px solid #ccc;
+        padding: 15px;
+        width: 100%;
+        height: 50px;
+      }
+      button{
         outline: none;
         border: none;
         border-radius: 30px;
@@ -164,24 +142,14 @@ const Button = styled.button`
         cursor: pointer;
         width: 100%;
         padding: 12px;
-    `
-const Input = styled.input``
-
-const Input25 = styled.input`
-   width: 24%;
-`
-
-const Input75 = styled.input`
-width: 74%
-`
-
-const Input100container = styled.div`
-width: 100%;
-display: flex;
-gap: 2%`
+      }
+        `
 
 const ListadePedidos = styled.div`
-
+width: 100%;
+display: flex;
+flex-wrap: wrap;
+margin: 10px auto;
 `
 
 
@@ -199,5 +167,18 @@ const Pedido = (props) => {
 }
 
 const PedidoWrapper = styled.div`
-  
+width: 200px;
+height: 300px;
+margin-left: 10px;
+margin-right: 10px;
+display: flex;
+flex-direction: column;
+gap: 8px;
+img {
+    width: 90%;
+   
+}
+h1, h2, h3, h4{
+    color: black;
+}
 `
