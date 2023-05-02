@@ -43,9 +43,8 @@ function handleSubmit(e) {
   function salvarmudançasdados(e){
     e.preventDefault();
     setLoading(true);
-    let novosdados = {...userData};
+    let novosdados = {name: userData.name, password: userData.password, email: userData.password};
     console.log(novosdados)
-    delete novosdados.pedidos;
     axios.put("http://localhost:5000/users", novosdados,  {headers:{
       "Authorization": `Bearer ${user.token}`
     }})
