@@ -44,6 +44,7 @@ function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     let novosdados = {...userData};
+    console.log(novosdados)
     delete novosdados.pedidos;
     axios.put("http://localhost:5000/users", novosdados,  {headers:{
       "Authorization": `Bearer ${user.token}`
@@ -119,10 +120,8 @@ function handleSubmit(e) {
     onChange={handleChange}
     />
     {
-        editardados?
         <button type="submit" onClick={salvarmudançasdados}>Salvar alterações</button>
-        :
-        <button onClick={() => setEditarDados(true)}>Alterar informações</button>
+        
     }
     </Form>
     <h1>Pedidos</h1>

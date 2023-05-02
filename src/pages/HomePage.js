@@ -72,7 +72,7 @@ export default function HomePage () {
                 }}/>
             
             <div>
-                <AiOutlineUser onClick={() => {navigate("/sign-up")}} style={{
+                <AiOutlineUser onClick={() => {!user ? navigate("/sign-up") : navigate("/profile")}} style={{
                     color: "white",
                     width: "30px",
                     height: "30px"
