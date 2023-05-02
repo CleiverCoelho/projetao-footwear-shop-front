@@ -93,7 +93,7 @@ export default function HomePage () {
         <ProductsContainer>
             {produtos.map(
                 (p) => 
-                <Produto>
+                <Produto onClick={() => navigate(`/product/${p.id}/${p.from}`)}>
                 <img src={p.image}></img>
                 <DivisionLine></DivisionLine>
                 <h1>{p.name}</h1>
