@@ -23,7 +23,7 @@ export default function ProductPage () {
     }
 
     function goToLastPage (){
-        navigate(`/${from}`);
+        navigate(`/${from === "home" ? "" : from}`);
     }
 
     function addItemOnCart(){

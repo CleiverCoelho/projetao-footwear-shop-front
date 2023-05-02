@@ -2,10 +2,46 @@ import styled from "styled-components"
 import api from "../services/api";
 import {AiOutlineHeart, AiOutlineUser, AiOutlinePlusCircle, AiOutlineMinusCircle} from "react-icons/ai"
 import fotoTemplate from "./foto_template.jpg"
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios  from "axios";
+import react from "react";
 
 export default function CartPage () {
+    
+    const [cartProducts, setCartProducts] = React.useState([]);
+
+    useEffect ( () => {
+        // para fazer a requisicao é precisao que esteja no formato
+        // const config = {
+        //   headers: { "Authorization": `Bearer ${localStorage.getItem("TOKEN")}`}
+        // }
+    
+        // axios.get(`${process.env.REACT_APP_API_URL}/home`, config)
+        // .then((res) => {
+        //   setTransacoes([...res.data].reverse());
+        //   // ((res.data));
+        // })
+        // .catch((err) => {
+        //   alert(err.response.data);
+        // })
+
+        // APENAS PARA TESTE ! ========================================
+        const config = {
+          headers: { "Authorization": `Bearer 98da1cb0-3dc9-4e32-82cb-05ce8e6e8a4c`}
+        }
+    
+        axios.get(`http://localhost:5000/cart`, config)
+        .then((res) => {
+            // console.log(res);x
+            setCartProducts([...res.data]);
+          // ((res.data));
+        })
+        .catch((err) => {
+          alert(err.response.data);
+        })
+    
+    }, []);
         
     return (
         <CartPageContainer>
@@ -15,8 +51,19 @@ export default function CartPage () {
 
             <ProductsContainer>
 
-                <Item id={1}></Item>
-                <Item id={2}></Item>
+                {cartProducts.map((product, index) => {
+                    return (
+                        <Item 
+                            id={product._id}
+                            key={product._id}
+                            name={product.name}
+                            price={product.price}
+                            size={product.size}
+                            color={product.color}
+                            img={product.img}    
+                        ></Item>
+                    )
+                })}
 
             </ProductsContainer>
 
@@ -43,7 +90,7 @@ export default function CartPage () {
     )
 }
 
-function Item ({id}) {
+function Item ({id, name, price, size, color, img}) {
 
     const [idItem, setIdItem] = React.useState(id)
     const [productQuantity, setProductQuantity] = React.useState(1);
@@ -53,12 +100,12 @@ function Item ({id}) {
             <ItemContainer>
                 <Link to={`/product/${idItem}/cart`}>
                     <ProductInfoContainer>
-                        <img src={fotoTemplate}></img>
+                        <img src={img}></img>
                         <div>
-                            <ProductName>Tenis Adidas Casual</ProductName>
+                            <ProductName>{name}</ProductName>
                             <ProductInfo>Vendido e entregue por FootwearShop</ProductInfo>
-                            <ProductInfo><span>Tamanho:</span> 40</ProductInfo>
-                            <ProductInfo><span>Cor:</span> Preto+Branco</ProductInfo>
+                            <ProductInfo><span>Tamanho:</span> {size}</ProductInfo>
+                            <ProductInfo><span>Cor:</span> {color}</ProductInfo>
                         </div>
                     </ProductInfoContainer>
                 </Link>
@@ -70,7 +117,7 @@ function Item ({id}) {
                             <AiOutlinePlusCircle onClick={() => setProductQuantity(productQuantity + 1)}></AiOutlinePlusCircle>
                         </QuantityContainer>
                         <PriceInfo>
-                            R$ 299,00 ou <br/>R$ 284,00 no pix
+                            R$ {price} ou <br/>R$ {price} no pix
                         </PriceInfo>
                     </PriceInfoContainer>
                 </ItemContainer>
