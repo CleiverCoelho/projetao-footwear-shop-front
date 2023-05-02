@@ -10,6 +10,8 @@ import react from "react";
 export default function CartPage () {
     
     const [cartProducts, setCartProducts] = React.useState([]);
+    const [totalItens, setTotalItens] = React.useState();
+    let totalPriceSum = 0;
 
     useEffect ( () => {
         // para fazer a requisicao é precisao que esteja no formato
@@ -34,7 +36,13 @@ export default function CartPage () {
         axios.get(`http://localhost:5000/cart`, config)
         .then((res) => {
             // console.log(res);x
-            setCartProducts([...res.data]);
+            const array = [...res.data];
+            setCartProducts(array);
+            array.forEach((product, index) => {
+                totalPriceSum += product.price;   
+            })
+            setTotalItens((totalPriceSum/2).toFixed(2));
+            
           // ((res.data));
         })
         .catch((err) => {
@@ -52,12 +60,13 @@ export default function CartPage () {
             <ProductsContainer>
 
                 {cartProducts.map((product, index) => {
+
                     return (
                         <Item 
-                            id={product._id}
+                            id={product.idProduto}
                             key={product._id}
                             name={product.name}
-                            price={product.price}
+                            price={product.price.toFixed(2)}
                             size={product.size}
                             color={product.color}
                             img={product.img}    
@@ -70,11 +79,11 @@ export default function CartPage () {
             <Footer>
                 <CartInfos>
                     <div>
-                        Subtotal (2 itens)
+                        Subtotal ({cartProducts.length} itens)
                     </div>
                     <div>
                         <span>
-                            R$ 299,90
+                            R$ {totalItens}
                         </span>
                     </div>
                 </CartInfos>
@@ -117,7 +126,7 @@ function Item ({id, name, price, size, color, img}) {
                             <AiOutlinePlusCircle onClick={() => setProductQuantity(productQuantity + 1)}></AiOutlinePlusCircle>
                         </QuantityContainer>
                         <PriceInfo>
-                            R$ {price} ou <br/>R$ {price} no pix
+                            R$ {price} ou <br/>R$ {Math.ceil((price * 0.93)).toFixed(2)} no pix
                         </PriceInfo>
                     </PriceInfoContainer>
                 </ItemContainer>

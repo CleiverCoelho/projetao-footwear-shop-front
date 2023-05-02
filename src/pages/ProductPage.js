@@ -2,19 +2,42 @@
 import {AiOutlineClose, AiOutlineHeart} from "react-icons/ai"
 import { GiShoppingCart } from "react-icons/gi"
 import styled from "styled-components"
-import fotoTemplate from "./foto_template.jpg"
 import React from "react";
+import { useEffect } from "react";
+import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 
 
 export default function ProductPage () {
 
     const {id, from} = useParams();
+    // const id = "645141c33b9a873d8796e3c4"
+    const [product, setProduct] = React.useState();
+    
     const [productSize, setProductSize] = React.useState();
     const [sizeSelected, setSizeSelected] = React.useState(false);
     const navigate = useNavigate();
 
     // pegar id do produto por parametro e realizar requisicao
+
+    useEffect ( () => {
+        // const {id} = useParams();
+        console.log(id)
+        axios.get(`http://localhost:5000/product/${id}`)
+        .then((res) => {
+            console.log(res);
+            setProduct(res.data);
+            
+          // ((res.data));
+        })
+        .catch((err) => {
+            console.log(err.response)
+          alert(err.response);
+        })
+    
+    }, [id]);
+
+    if(product === undefined) return <>Loading</>
 
     function toggleSelectSize(){
         if(productSize){
@@ -27,7 +50,7 @@ export default function ProductPage () {
     }
 
     function addItemOnCart(){
-
+        
     }
 
     return (
@@ -54,11 +77,11 @@ export default function ProductPage () {
                 </div>
             </Header>
             <ProductInfo>
-                <img src={fotoTemplate} alt="produto"></img>
+                <img src={product.img} alt="produto"></img>
                 {/* <DivisionLine></DivisionLine> */}
-                <ProductName>Tenis Adidas Casual</ProductName>
+                <ProductName>{product.name}</ProductName>
                 <DivisionLine></DivisionLine>
-                <ProductName>Cor: Preto e Branco</ProductName>
+                <ProductName>Cor: {product.color}</ProductName>
                 <DivisionLine></DivisionLine>
                 <ProductName onClick={toggleSelectSize}>{productSize ?  `Tamanho: ${productSize}` : "Selecione o Tamanho" }</ProductName>
                 { !productSize &&
@@ -73,7 +96,7 @@ export default function ProductPage () {
                         <div onClick={() => setProductSize(42)}><p>42</p></div>
                     </ListSizes> }
                 <DivisionLine></DivisionLine>
-                <ProductPrice>R$ 227,99 <span>no pix</span> <br/><span>ou R$ R$ 239,99 em até 5x sem juros</span></ProductPrice>
+                <ProductPrice>R$ {(product.price * 0.93).toFixed(2)} <span>no pix</span> <br/><span>ou R$ R$ {product.price.toFixed(2)} em até 5x sem juros</span></ProductPrice>
                 <Footer onClick={addItemOnCart}>
                     COMPRAR
                 </Footer>
