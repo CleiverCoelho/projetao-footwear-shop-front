@@ -1,9 +1,11 @@
 import { useContext, useState, useEffect } from "react"
-import UserContext from "../contexts/UserContext2";
+import UserContext from "../contexts/UserContext.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {AiOutlineHeart, AiOutlineUser} from "react-icons/ai"
-import {GiConverseShoe, GiShoppingCart} from "react-icons/gi"
+import {GiConverseShoe, GiShoppingCart} from "react-icons/gi";
+import styled from "styled-components";
+
 
 export function ProfilePage(){
   const [userData, setUserData] = useState({name: "", email: "", password: "", pedidos: [] });
@@ -11,8 +13,9 @@ export function ProfilePage(){
   const { user, login } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [busca,setBusca] = useState("");
 
-  if(!user.token){
+  if(!user){
     navigate("/sign-in");
   }
 
@@ -23,6 +26,14 @@ export function ProfilePage(){
 }
 
 
+
+function definirbusca(e){
+  setBusca(e.target.value);
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+}
 
 
   function handleChange(e) {
@@ -70,9 +81,6 @@ export function ProfilePage(){
                     width: "30px",
                     height: "30px"
                 }}/>
-            <SearchForm onSubmit={buscar}>
-                <input onChange={definirbusca} />
-           </SearchForm>
             <div>
                 <AiOutlineUser style={{
                     color: "white",
@@ -109,7 +117,7 @@ export function ProfilePage(){
         onChange={handleChange}
         />
         {
-            editar?
+            editardados?
             <button type="submit" onClick={salvarmudançasdados}>Salvar alterações</button>
             :
             <button onClick={() => setEditarDados(true)}>Alterar informações</button>
@@ -208,8 +216,8 @@ img {
 }
 h1, h2, h3, h4{
     color: black;
-}
-`
+}`
+
 const Header = styled.div`
     width: 100%;
     height: 40px;
@@ -230,3 +238,15 @@ const Header = styled.div`
 
     }
 `
+
+const SearchForm = styled.form`
+width: 33%;
+height: 80%;
+
+input{
+    border-radius: 5px;
+    height: 100%;
+    width: 100%;
+    padding: 2%;
+    color: black;
+}`

@@ -3,9 +3,10 @@ import {AiOutlineHeart, AiOutlineUser} from "react-icons/ai"
 import {GiConverseShoe, GiShoppingCart} from "react-icons/gi"
 import { useEffect, useState , useContext} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import banner from "../assets/banner.png";
 import fotoTemplate from "./foto_template.jpg";
-import UserContext from "../contexts/UserContext2";
+import UserContext from "../contexts/UserContext";
 import brand1 from "../assets/brand1.png"
 import brand2 from "../assets/brand2.png"
 import brand3 from "../assets/brand3.png"
@@ -13,11 +14,9 @@ import brand3 from "../assets/brand3.png"
 
 export default function HomePage () {
 
-    const [produtos, setProdutos] = useState([{image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
-    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
-    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
-    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"}, {image:{fotoTemplate}, name:"produto", valor:"199,99", color: "azul"}]);
+    const [produtos, setProdutos] = useState([]);
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [marca, setMarca] = useState("brand1");
     const [busca, setBusca] = useState("");
@@ -26,16 +25,12 @@ export default function HomePage () {
         setBusca(e.target.value);
     }
 
-    function buscar(e){
-        e.preventDefault()
-    }
+    
 
     
     function buscar(e){
         e.preventDefault();
-        axios.get("http://localhost:5000/products", {name: busca}, {headers:{
-          "Authorization": `Bearer ${user.token}`
-       }})
+        axios.get("http://localhost:5000/products", {name: busca})
        .then(
         (res) => {setProdutos(res.data);}
        )
@@ -46,9 +41,7 @@ export default function HomePage () {
     
 
     useEffect(() => {
-    axios.get("http://localhost:5000/products", {headers:{
-         "Authorization": `Bearer ${user.token}`
-   }})
+    axios.get("http://localhost:5000/products")
       .then(
           (res) => {setProdutos(res.data)}
        )
@@ -57,17 +50,15 @@ export default function HomePage () {
         )
    }, [])
 
-   function getProductsbybrand(e){
-      axios.get(`http://localhost:5000/products/${marca}`, {headers:{
-          "Authorization": `Bearer ${user.token}`
-        }})
+   useEffect(() =>
+      {axios.get(`http://localhost:5000/products/${marca}`)
         .then(
            (res) => {setProdutos(res.data)}
           )
          .catch(
            (err) => {alert(err.response.status)}
-       )
-    }
+       )}
+   , [marca])
 
     return (
         <>
@@ -79,16 +70,14 @@ export default function HomePage () {
                     width: "30px",
                     height: "30px"
                 }}/>
-            <SearchForm onSubmit={buscar}>
-                <input onChange={definirbusca} />
-           </SearchForm>
+            
             <div>
-                <AiOutlineUser style={{
+                <AiOutlineUser onClick={() => {navigate("/sign-up")}} style={{
                     color: "white",
                     width: "30px",
                     height: "30px"
                 }}></AiOutlineUser>
-                <GiShoppingCart style={{
+                <GiShoppingCart onClick={() => {navigate("/cart")}}  style={{
                     color: "white",
                     width: "30px",
                     height: "30px"
@@ -226,5 +215,4 @@ input{
     width: 100%;
     padding: 2%;
     color: black;
-}
-`
+}`
