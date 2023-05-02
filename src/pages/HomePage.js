@@ -33,7 +33,7 @@ export default function HomePage () {
     
     function buscar(e){
         e.preventDefault();
-        axios.get("/produtos/name", {busca}, {headers:{
+        axios.get("http://localhost:5000/products", {name: busca}, {headers:{
           "Authorization": `Bearer ${user.token}`
        }})
        .then(
@@ -45,20 +45,20 @@ export default function HomePage () {
     }
     
 
-    //useEffect(() => {
-   //    axios.get("/produtos", {headers:{
-    //        "Authorization": `Bearer ${user.token}`
-   //       }})
-   //    .then(
-   //         (res) => {setProdutos(res.data)}
-   //     )
-   //     .catch(
-   //         (err) => {alert(err.response.status)}
-   //     )
-   // }, [])
+    useEffect(() => {
+    axios.get("http://localhost:5000/products", {headers:{
+         "Authorization": `Bearer ${user.token}`
+   }})
+      .then(
+          (res) => {setProdutos(res.data)}
+       )
+       .catch(
+            (err) => {alert(err.response.status)}
+        )
+   }, [])
 
    function getProductsbybrand(e){
-      axios.get(`/produtos/${marca}`, {headers:{
+      axios.get(`http://localhost:5000/products/${marca}`, {headers:{
           "Authorization": `Bearer ${user.token}`
         }})
         .then(
