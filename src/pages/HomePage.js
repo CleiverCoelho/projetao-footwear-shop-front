@@ -13,10 +13,7 @@ import brand3 from "../assets/brand3.png"
 
 export default function HomePage () {
 
-    const [produtos, setProdutos] = useState([{image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
-    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
-    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"},
-    {image:{fotoTemplate}, name:"produto", valor:"199,99", color:"preto e branco"}, {image:{fotoTemplate}, name:"produto", valor:"199,99", color: "azul"}]);
+    const [produtos, setProdutos] = useState([]);
     const { user } = useContext(UserContext);
 
     const [marca, setMarca] = useState("brand1");
@@ -26,16 +23,12 @@ export default function HomePage () {
         setBusca(e.target.value);
     }
 
-    function buscar(e){
-        e.preventDefault()
-    }
+    
 
     
     function buscar(e){
         e.preventDefault();
-        axios.get("http://localhost:5000/products", {name: busca}, {headers:{
-          "Authorization": `Bearer ${user.token}`
-       }})
+        axios.get("http://localhost:5000/products", {name: busca})
        .then(
         (res) => {setProdutos(res.data);}
        )
@@ -46,9 +39,7 @@ export default function HomePage () {
     
 
     useEffect(() => {
-    axios.get("http://localhost:5000/products", {headers:{
-         "Authorization": `Bearer ${user.token}`
-   }})
+    axios.get("http://localhost:5000/products")
       .then(
           (res) => {setProdutos(res.data)}
        )
@@ -57,17 +48,15 @@ export default function HomePage () {
         )
    }, [])
 
-   function getProductsbybrand(e){
-      axios.get(`http://localhost:5000/products/${marca}`, {headers:{
-          "Authorization": `Bearer ${user.token}`
-        }})
+   useEffect(() =>
+      {axios.get(`http://localhost:5000/products/${marca}`)
         .then(
            (res) => {setProdutos(res.data)}
           )
          .catch(
            (err) => {alert(err.response.status)}
-       )
-    }
+       )}
+   , [marca])
 
     return (
         <>
@@ -79,9 +68,7 @@ export default function HomePage () {
                     width: "30px",
                     height: "30px"
                 }}/>
-            <SearchForm onSubmit={buscar}>
-                <input onChange={definirbusca} />
-           </SearchForm>
+            
             <div>
                 <AiOutlineUser style={{
                     color: "white",
@@ -226,5 +213,4 @@ input{
     width: 100%;
     padding: 2%;
     color: black;
-}
-`
+}`

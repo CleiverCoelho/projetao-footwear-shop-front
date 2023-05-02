@@ -2,17 +2,11 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import styled from "styled-components"
-import { UserContext } from "../contexts/UserContext2";
+import UserContext from "../contexts/UserContext2";
 import api from "../services/api";
 import axios from "axios";
 
-import { Link } from "react-router-dom"
-import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
-import styled from "styled-components"
-import { UserContext } from "../contexts/UserContext";
-import api from "../services/api";
-import axios from "axios";
+
 
 export default function SignInPage() {
   const {user, login} = useContext(UserContext);
@@ -94,13 +88,3 @@ const Button = styled.button`
     `
 const Input = styled.input``
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import styled from "styled-components";
-import HomePage from "./pages/HomePage";
-import SignInPage from "./pages/SignInPage";
-import SignUpPage from "./pages/SignUpPage";
-import { UserProvider }  from "./contexts/UserContext2";
-import CartPage from "./pages/CartPage";
-import ProductPage from "./pages/ProductPage";
-import AddressPage from "./pages/AddressPage";
-import { ProfilePage } from "./pages/ProfilePage";
