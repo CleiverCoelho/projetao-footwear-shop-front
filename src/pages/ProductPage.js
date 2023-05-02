@@ -15,7 +15,6 @@ export default function ProductPage () {
     const [product, setProduct] = React.useState();
     
     const [productSize, setProductSize] = React.useState();
-    const [sizeSelected, setSizeSelected] = React.useState(false);
     const navigate = useNavigate();
 
     // pegar id do produto por parametro e realizar requisicao
@@ -50,7 +49,30 @@ export default function ProductPage () {
     }
 
     function addItemOnCart(){
-        
+
+        if(!productSize) return alert("selecione um tamanho")
+
+        const config = {
+            headers: { "Authorization": `Bearer 98da1cb0-3dc9-4e32-82cb-05ce8e6e8a4c`}
+          }
+      
+        const body = {size: productSize}
+        axios.post(`http://localhost:5000/cart/${id}`, body, config)
+        .then((res) => {
+            console.log(res); 
+            alert("item adicionado no carrinho!")           
+          // ((res.data));
+        })
+        .catch((err) => {
+            console.log(err.response)
+          alert(err.response);
+        })
+    
+
+    }
+
+    function goToCart(){
+        navigate('/cart')
     }
 
     return (
@@ -69,7 +91,9 @@ export default function ProductPage () {
                         width: "30px",
                         height: "30px"
                     }}></AiOutlineHeart>
-                    <GiShoppingCart style={{
+                    <GiShoppingCart 
+                        onClick={goToCart}
+                        style={{
                         color: "white",
                         width: "30px",
                         height: "30px"

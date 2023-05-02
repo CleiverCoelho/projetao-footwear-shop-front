@@ -11,22 +11,10 @@ export default function CartPage () {
     
     const [cartProducts, setCartProducts] = React.useState([]);
     const [totalItens, setTotalItens] = React.useState();
+    const [checkSum, setCheckSum] = React.useState(false);
     let totalPriceSum = 0;
 
     useEffect ( () => {
-        // para fazer a requisicao é precisao que esteja no formato
-        // const config = {
-        //   headers: { "Authorization": `Bearer ${localStorage.getItem("TOKEN")}`}
-        // }
-    
-        // axios.get(`${process.env.REACT_APP_API_URL}/home`, config)
-        // .then((res) => {
-        //   setTransacoes([...res.data].reverse());
-        //   // ((res.data));
-        // })
-        // .catch((err) => {
-        //   alert(err.response.data);
-        // })
 
         // APENAS PARA TESTE ! ========================================
         const config = {
@@ -38,10 +26,6 @@ export default function CartPage () {
             // console.log(res);x
             const array = [...res.data];
             setCartProducts(array);
-            array.forEach((product, index) => {
-                totalPriceSum += product.price;   
-            })
-            setTotalItens((totalPriceSum/2).toFixed(2));
             
           // ((res.data));
         })
@@ -58,9 +42,14 @@ export default function CartPage () {
             </Header>
 
             <ProductsContainer>
-
                 {cartProducts.map((product, index) => {
+                        totalPriceSum += product.price;  
 
+                if((index === cartProducts.length - 1) && !checkSum){
+                    setTotalItens(totalPriceSum.toFixed(2));
+                    setCheckSum(true);
+                }
+                        
                     return (
                         <Item 
                             id={product.idProduto}
@@ -208,7 +197,7 @@ const PriceInfo = styled.div`
 
 const CartPageContainer = styled.div`
     width: 100%;
-    height: 900px;
+    height: 100%;
     background-color: #b61c1c;
 `
 const ProductInfoContainer = styled.div`
@@ -264,11 +253,12 @@ const Header = styled.div`
 `
 const ProductsContainer = styled.div`
     width: 100%;
-    height: 900px;
+    height: 100%;
 
     display: flex;
     flex-direction: column;
     margin-top: 60px;
+    margin-bottom: 200px;
     /* padding: 20px; */
 `
 const ItemContainer = styled.div`
@@ -276,6 +266,6 @@ const ItemContainer = styled.div`
     border-radius: 5px;
     height: 180px;
     padding: 10px;
-    margin-top: 20px;
+    margin-top: 30px;
     /* background-color: black; */
 `
