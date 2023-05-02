@@ -7,7 +7,7 @@ import { UserProvider }  from "./contexts/UserContext2";
 import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
 import AddressPage from "./pages/AddressPage";
-
+import { ProfilePage } from "./pages/ProfilePage";
 
 export default function App() {
 
@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/product/:id/:from" element={<ProductPage/>} />
-          <Route path="/address" element={<AddressPage/>} />
+          <Route path="/profile" element={<ProfilePage/>} />
         </Routes>
 
       </BrowserRouter>

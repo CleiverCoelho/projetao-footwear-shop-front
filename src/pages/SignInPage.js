@@ -2,13 +2,23 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import styled from "styled-components"
+import { UserContext } from "../contexts/UserContext2";
+import api from "../services/api";
+import axios from "axios";
+
+import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import styled from "styled-components"
 import { UserContext } from "../contexts/UserContext";
 import api from "../services/api";
+import axios from "axios";
 
 export default function SignInPage() {
-  const {user, setUser} = useContext(UserContext);
+  const {user, login} = useContext(UserContext);
   const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,26 +26,13 @@ export default function SignInPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    const promise = api.signIn({ ...formData });
-    promise.then((response) => {
-      console.log(response.data);
-      const {idUser, token, name} = response.data;
-      setUser({idUser, token, name});
-      localStorage.setItem("user", JSON.stringify({idUser, token, name}))
-      navigate("/home");
-    });
-
-    promise.catch((error) => {
-      if ( error.response.status === 404) {
-        alert('Email não cadastrado')
-      }else if (error.response.status === 401) {
-        alert('Senha incorreta')
-      }else if (error.response.status === 422) {
-        alert('Verifique se os dados foram preenchidos corretamente')
-      }
-     
-    });
+    axios.post("/sign-in", {formData})
+    .then(
+      (res) => {login(res.data);navigate("/")}
+    )
+    .catch(
+      (err) => {alert(err.response.status)}
+    )
   }
 
   return (
@@ -96,3 +93,14 @@ const Button = styled.button`
         padding: 12px;
     `
 const Input = styled.input``
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import styled from "styled-components";
+import HomePage from "./pages/HomePage";
+import SignInPage from "./pages/SignInPage";
+import SignUpPage from "./pages/SignUpPage";
+import { UserProvider }  from "./contexts/UserContext2";
+import CartPage from "./pages/CartPage";
+import ProductPage from "./pages/ProductPage";
+import AddressPage from "./pages/AddressPage";
+import { ProfilePage } from "./pages/ProfilePage";
