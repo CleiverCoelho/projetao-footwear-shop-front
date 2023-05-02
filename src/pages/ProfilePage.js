@@ -2,7 +2,8 @@ import { useContext, useState, useEffect } from "react"
 import UserContext from "../contexts/UserContext2";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import {AiOutlineHeart, AiOutlineUser} from "react-icons/ai"
+import {GiConverseShoe, GiShoppingCart} from "react-icons/gi"
 
 export function ProfilePage(){
   const [userData, setUserData] = useState({name: "", email: "", password: "", pedidos: [] });
@@ -31,7 +32,9 @@ export function ProfilePage(){
   function salvarmudançasdados(e){
     e.preventDefault();
     setLoading(true);
-    axios.put("users", userData,  {headers:{
+    let novosdados = {...userData};
+    delete novosdados.pedidos;
+    axios.put("http://localhost:5000/users", novosdados,  {headers:{
       "Authorization": `Bearer ${user.token}`
     }})
     .then(
@@ -39,7 +42,7 @@ export function ProfilePage(){
     )
     .catch(
       //tbm altera editar
-      (err) => {alert(err.response.status)}
+      (err) => {alert(err.response.status); setEditarDados(true); setLoading(false)}
     )
   }
    
@@ -59,6 +62,30 @@ export function ProfilePage(){
   }, [])
 
     return(
+      <>
+      <Header>
+            <GiConverseShoe style={{
+                    marginLeft: "10px",
+                    color: "white",
+                    width: "30px",
+                    height: "30px"
+                }}/>
+            <SearchForm onSubmit={buscar}>
+                <input onChange={definirbusca} />
+           </SearchForm>
+            <div>
+                <AiOutlineUser style={{
+                    color: "white",
+                    width: "30px",
+                    height: "30px"
+                }}></AiOutlineUser>
+                <GiShoppingCart style={{
+                    color: "white",
+                    width: "30px",
+                    height: "30px"
+                }}></GiShoppingCart>
+            </div>
+        </Header>
     <SingInContainer>
       <Form onSubmit={handleSubmit}>
         <h1>Dados Cadastrais</h1>
@@ -100,6 +127,7 @@ export function ProfilePage(){
         
       
     </SingInContainer>
+    </>
     )
 }
 
@@ -181,4 +209,24 @@ img {
 h1, h2, h3, h4{
     color: black;
 }
+`
+const Header = styled.div`
+    width: 100%;
+    height: 40px;
+    background-color: #b61c1c;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    div {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        width: 30%;
+        justify-content: space-between;
+
+    }
 `
