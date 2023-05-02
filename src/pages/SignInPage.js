@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import styled from "styled-components"
-import UserContext from "../contexts/UserContext2";
+import UserContext from "../contexts/UserContext";
 import api from "../services/api";
 import axios from "axios";
 
@@ -13,6 +13,9 @@ export default function SignInPage() {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  if(user){
+    navigate("/profile")
+  }
 
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,7 +23,7 @@ export default function SignInPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post("/sign-in", {formData})
+    axios.post("http://localhost:5000/sign-in", {formData})
     .then(
       (res) => {login(res.data);navigate("/")}
     )

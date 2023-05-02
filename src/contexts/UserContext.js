@@ -1,20 +1,22 @@
-import { createContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, useState } from "react";
 
-export const UserContext = createContext();
+const UserContext = createContext();
 
-export default function UserProvider({children}){
-    const lsUser = JSON.parse(localStorage.getItem("user"))
-    const [user, setUser]= useState(lsUser !== null ? lsUser : {});
-    const navigate = useNavigate();
-    const currentUrl = window.location.href;
+export function UserProvider({ children }) {
+  let persistencia = localStorage.getItem("user");
+  persistencia = JSON.parse(persistencia);
+  const [user, setUser] = useState(persistencia);
 
+  function login(dados) {
+    setUser(dados);
+    localStorage.setItem("user", JSON.stringify(dados));
+  }
 
-    
-    return(
-        <UserContext.Provider value={{user, setUser}}>
-            {children}
-        </UserContext.Provider>
+  return (
+    <UserContext.Provider value={{ user, login }}>
+      {children}
+    </UserContext.Provider>
+  )
+}
 
-    )
-};
+export default UserContext;

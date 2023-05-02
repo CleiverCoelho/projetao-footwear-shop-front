@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react"
-import UserContext from "../contexts/UserContext2.js";
+import UserContext from "../contexts/UserContext.js";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {AiOutlineHeart, AiOutlineUser} from "react-icons/ai"

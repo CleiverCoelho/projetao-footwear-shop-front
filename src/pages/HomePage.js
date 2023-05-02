@@ -3,9 +3,10 @@ import {AiOutlineHeart, AiOutlineUser} from "react-icons/ai"
 import {GiConverseShoe, GiShoppingCart} from "react-icons/gi"
 import { useEffect, useState , useContext} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import banner from "../assets/banner.png";
 import fotoTemplate from "./foto_template.jpg";
-import UserContext from "../contexts/UserContext2";
+import UserContext from "../contexts/UserContext";
 import brand1 from "../assets/brand1.png"
 import brand2 from "../assets/brand2.png"
 import brand3 from "../assets/brand3.png"
@@ -15,6 +16,7 @@ export default function HomePage () {
 
     const [produtos, setProdutos] = useState([]);
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [marca, setMarca] = useState("brand1");
     const [busca, setBusca] = useState("");
@@ -70,12 +72,12 @@ export default function HomePage () {
                 }}/>
             
             <div>
-                <AiOutlineUser style={{
+                <AiOutlineUser onClick={() => {navigate("/sign-up")}} style={{
                     color: "white",
                     width: "30px",
                     height: "30px"
                 }}></AiOutlineUser>
-                <GiShoppingCart style={{
+                <GiShoppingCart onClick={() => {navigate("/cart")}}  style={{
                     color: "white",
                     width: "30px",
                     height: "30px"

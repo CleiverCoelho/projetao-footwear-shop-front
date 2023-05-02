@@ -3,19 +3,22 @@ import styled from "styled-components";
 import HomePage from "./pages/HomePage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
-import { UserProvider }  from "./contexts/UserContext2";
+import { UserProvider }  from "./contexts/UserContext";
 import CartPage from "./pages/CartPage";
 import ProductPage from "./pages/ProductPage";
 import AddressPage from "./pages/AddressPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import GlobalStyle from "./style/GlobalStyle"
+import ResetStyle from "./style/ResetStyle"
 
 export default function App() {
 
   return (
+    <>
+     <ResetStyle />
+    <GlobalStyle />
+    <UserProvider>
     <PagesContainer>
-
-
-      <UserProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/sign-in" element={<SignInPage />} />
@@ -27,8 +30,9 @@ export default function App() {
         </Routes>
 
       </BrowserRouter>
-      </UserProvider>
     </PagesContainer>
+    </UserProvider>
+    </>
   )
 }
 

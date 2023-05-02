@@ -1,14 +1,20 @@
 
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components"
 import api from "../services/api";
+import UserContext from "../contexts/UserContext";
 
 export default function SignUpPage() {
 
   const [formData, setFormData] = useState({name:'', email:'', password:'', confirmPassword:''});
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+
+  if(user){
+    navigate("/sign-in")
+  }
 
 
   function handleChange(e) {
