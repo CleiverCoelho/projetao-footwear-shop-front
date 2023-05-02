@@ -74,67 +74,73 @@ function handleSubmit(e) {
 
     return(
       <>
-      <Header>
-            <GiConverseShoe style={{
-                    marginLeft: "10px",
-                    color: "white",
-                    width: "30px",
-                    height: "30px"
-                }}/>
-            <div>
-                <AiOutlineUser style={{
-                    color: "white",
-                    width: "30px",
-                    height: "30px"
-                }}></AiOutlineUser>
-                <GiShoppingCart style={{
-                    color: "white",
-                    width: "30px",
-                    height: "30px"
-                }}></GiShoppingCart>
-            </div>
-        </Header>
-    <SingInContainer>
-      <Form onSubmit={handleSubmit}>
-        <h1>Dados Cadastrais</h1>
-        <input  
-        name="name"
-        value={userData.name}
-        disabled={!editardados}
-        onChange={handleChange}/>
+      {
+        <>
+        user? <Header>
+        <GiConverseShoe style={{
+                marginLeft: "10px",
+                color: "white",
+                width: "30px",
+                height: "30px"
+            }}/>
+        <div>
+            <AiOutlineUser style={{
+                color: "white",
+                width: "30px",
+                height: "30px"
+            }}></AiOutlineUser>
+            <GiShoppingCart style={{
+                color: "white",
+                width: "30px",
+                height: "30px"
+            }}></GiShoppingCart>
+        </div>
+    </Header>
+<SingInContainer>
+  <Form onSubmit={handleSubmit}>
+    <h1>Dados Cadastrais</h1>
+    <input  
+    name="name"
+    value={userData.name}
+    disabled={!editardados}
+    onChange={handleChange}/>
 
-       <input 
-        type="email" 
-        name="email"
-        value={userData.email}
-        disabled={!editardados}
-        onChange={handleChange}/>
+   <input 
+    type="email" 
+    name="email"
+    value={userData.email}
+    disabled={!editardados}
+    onChange={handleChange}/>
 
-       <input 
-        name="password"
-        disabled={!editardados}
-        value={userData.password}
-        onChange={handleChange}
-        />
+   <input 
+    name="password"
+    disabled={!editardados}
+    value={userData.password}
+    onChange={handleChange}
+    />
+    {
+        editardados?
+        <button type="submit" onClick={salvarmudançasdados}>Salvar alterações</button>
+        :
+        <button onClick={() => setEditarDados(true)}>Alterar informações</button>
+    }
+    </Form>
+    <h1>Pedidos</h1>
+    <ListadePedidos>
         {
-            editardados?
-            <button type="submit" onClick={salvarmudançasdados}>Salvar alterações</button>
-            :
-            <button onClick={() => setEditarDados(true)}>Alterar informações</button>
+            userData.pedidos.map(
+                (p) => <Pedido imagem={p.imagem} quantidade = {p.quantidade} valor = {p.valor} nome={p.nome} marca={p.brand} />
+            )
         }
-        </Form>
-        <h1>Pedidos</h1>
-        <ListadePedidos>
-            {
-                userData.pedidos.map(
-                    (p) => <Pedido imagem={p.imagem} quantidade = {p.quantidade} valor = {p.valor} nome={p.nome} marca={p.brand} />
-                )
-            }
-        </ListadePedidos>
+    </ListadePedidos>
 
-        
+    
+  
+</SingInContainer>
+: <></>
+</>
+  }
       
-    </SingInContainer>
     </>
     )
 }
