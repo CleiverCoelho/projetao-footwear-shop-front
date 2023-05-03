@@ -1,3 +1,4 @@
+
 import { useContext, useState, useEffect } from "react"
 import UserContext from "../contexts/UserContext.js";
 import axios from "axios";
@@ -27,6 +28,7 @@ export function ProfilePage(){
 
 
 
+
 function definirbusca(e){
   setBusca(e.target.value);
 }
@@ -43,13 +45,24 @@ function handleSubmit(e) {
   function salvarmudançasdados(e){
     e.preventDefault();
     setLoading(true);
-    let novosdados = {...userData};
-    delete novosdados.pedidos;
-    axios.put("http://localhost:5000/users", novosdados,  {headers:{
+    let novosdados = {name: userData.name, password: userData.password, email: userData.email};
+    console.log(novosdados)
+    axios.put("http://localhost:5000/user", novosdados,  {headers:{
       "Authorization": `Bearer ${user.token}`
     }})
     .then(
-      (res) => {setUserData(res.data);setEditarDados(true); setLoading(false)}
+      (res) => {axios.get("http://localhost:5000/user", {headers:{
+        "Authorization": `Bearer ${user.token}`
+      }})
+      .then(
+        (res) => {
+          setUserData(res.data);
+  
+        }
+      )
+      .catch(
+        (err) => {alert(err.response.status)}
+      );setEditarDados(true); setLoading(false)}
     )
     .catch(
       //tbm altera editar
@@ -58,7 +71,7 @@ function handleSubmit(e) {
   }
    
   useEffect(() => {
-    axios.get("users", {headers:{
+    axios.get("http://localhost:5000/user", {headers:{
       "Authorization": `Bearer ${user.token}`
     }})
     .then(
@@ -72,6 +85,7 @@ function handleSubmit(e) {
     )
   }, [])
 
+
     return(
       <>
       {
@@ -84,12 +98,12 @@ function handleSubmit(e) {
                 height: "30px"
             }}/>
         <div>
-            <AiOutlineUser style={{
+            <AiOutlineUser onClick={() => {navigate("/profile")}} style={{
                 color: "white",
                 width: "30px",
                 height: "30px"
             }}></AiOutlineUser>
-            <GiShoppingCart style={{
+            <GiShoppingCart onClick={() => {navigate("/cart")}}  style={{
                 color: "white",
                 width: "30px",
                 height: "30px"
@@ -119,10 +133,8 @@ function handleSubmit(e) {
     onChange={handleChange}
     />
     {
-        editardados?
         <button type="submit" onClick={salvarmudançasdados}>Salvar alterações</button>
-        :
-        <button onClick={() => setEditarDados(true)}>Alterar informações</button>
+        
     }
     </Form>
     <h1>Pedidos</h1>
@@ -158,7 +170,6 @@ const SingInContainer = styled.section`
   }
 `
 const Form = styled.form`
-
 display: flex;
         flex-direction: column;
         justify-content: center;
@@ -228,7 +239,6 @@ const Header = styled.div`
     width: 100%;
     height: 40px;
     background-color: #b61c1c;
-
     position: fixed;
     top: 0;
     left: 0;
@@ -241,14 +251,12 @@ const Header = styled.div`
         padding: 10px;
         width: 30%;
         justify-content: space-between;
-
     }
 `
 
 const SearchForm = styled.form`
 width: 33%;
 height: 80%;
-
 input{
     border-radius: 5px;
     height: 100%;

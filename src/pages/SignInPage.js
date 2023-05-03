@@ -23,7 +23,8 @@ export default function SignInPage() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    axios.post("http://localhost:5000/sign-in", {formData})
+    console.log(formData)
+    axios.post("http://localhost:5000/sign-in", formData)
     .then(
       (res) => {login(res.data);navigate("/")}
     )

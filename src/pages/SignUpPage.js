@@ -5,7 +5,7 @@ import { useContext, useState } from "react";
 import styled from "styled-components"
 import api from "../services/api";
 import UserContext from "../contexts/UserContext";
-
+import axios from "axios";
 export default function SignUpPage() {
 
   const [formData, setFormData] = useState({name:'', email:'', password:'', confirmPassword:''});
@@ -22,26 +22,19 @@ export default function SignUpPage() {
   }
 
   function handleSubmit(e) {
+     
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) return alert("As senhas precisam ser as mesmas!")
-
-    const {confirmPassword, ...sendData} = formData;
-    console.log(sendData)
-
-    const promise = api.signUp({ ...sendData });
-    promise.then((response) => {
-      console.log(response.data);
-      navigate("/sign-in");
-    });
-    promise.catch((error) => {
-    if (error.response.status === 422) {
-        alert("O cadastro falhou. Verifique se os dados foram preenchidos corretamente! (A senha precisa ter no mínimo 3 caracteres)")
-    }else if (error.response.status === 409) {
-        alert("Email já utilizado")
-    }else {
-      alert("Ocorreu um erro inesperado")
-    } 
-    });
+  console.log(formData);
+    let cadastro = {...formData};
+    delete cadastro.confirmPassword;
+    axios.post("http://localhost:5000/sign-up", cadastro)
+    .then(
+      (res) => {navigate("/sign-in")}
+    )
+    .catch(
+      (err) => {console.log(err.response.status)}
+    )
   }
 
   return (
