@@ -15,6 +15,7 @@ export function ProfilePage(){
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [busca,setBusca] = useState("");
+  const [novaSenha, setNovaSenha] = useState(userData.password)
 
   if(!user){
     navigate("/sign-in");
@@ -131,6 +132,7 @@ function handleSubmit(e) {
    <input 
    placeholder="Senha"
     name="password"
+    type="password"
     disabled={!editardados}
     value={userData.password}
     onChange={handleChange}

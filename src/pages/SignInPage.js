@@ -5,6 +5,7 @@ import styled from "styled-components"
 import UserContext from "../contexts/UserContext";
 import api from "../services/api";
 import axios from "axios";
+import {GiConverseShoe, GiShoppingCart} from "react-icons/gi"
 
 
 
@@ -29,7 +30,14 @@ export default function SignInPage() {
       (res) => {login(res.data);navigate("/")}
     )
     .catch(
-      (err) => {alert(err.response.status)}
+      (err) => {
+        if (err.response.status === 404){
+          alert("Usuário não cadastrado")
+        }else {
+          alert(err.response.status)
+        }
+        
+      }
     )
   }
 
@@ -60,6 +68,15 @@ export default function SignInPage() {
       <Link to="/sign-up">
         Primeira vez? Cadastre-se!
       </Link>
+
+            <GiConverseShoe onClick={() => {navigate("/")}} style={{
+                    marginLeft: "10px",
+                    marginTop: "20px",
+                    color: "white",
+                    width: "30px",
+                    height: "30px"
+                }}/>
+
     </SingInContainer>
   )
 }

@@ -10,7 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function ProductPage () {
 
-    const {id, from} = useParams();
+    const {id} = useParams();
     // const id = "645141c33b9a873d8796e3c4"
     const [product, setProduct] = React.useState();
     
@@ -44,9 +44,9 @@ export default function ProductPage () {
         }
     }
 
-    function goToLastPage (){
-        navigate(`/${from === "home" ? "" : from}`);
-    }
+ //   function goToLastPage (){
+   //     navigate(`/${from === "home" ? "" : from}`);
+    //}
 
     function addItemOnCart(){
 
@@ -79,12 +79,12 @@ export default function ProductPage () {
 
         <ProductContainer>
             <Header>
-                <AiOutlineClose style={{
+                <AiOutlineClose onClick={() => {navigate("/")}} style={{
                         marginLeft: "10px",
                         color: "white",
                         width: "30px",
                         height: "30px"
-                    }} onClick={goToLastPage}/>
+                    }} />
                 <div>
                     <AiOutlineHeart style={{
                         color: "white",
@@ -156,7 +156,7 @@ const ListSizes = styled.div`
         }
     }
 `
-
+const Input = styled.input``
 const Footer = styled.div`
     width: 100%;
     height: 50px;
