@@ -9,7 +9,6 @@ export default function AddressPage() {
   const [formData, setFormData] = useState({rua:'', numero:'', complemento:'', cidade:'', estado:''});
   const navigate = useNavigate();
 
-
   function handleChange(e) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }

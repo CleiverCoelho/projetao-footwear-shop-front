@@ -77,7 +77,9 @@ padding: 25px;
     margin-top: 5%;
   }
 `
-const Form = styled.form``
+const Form = styled.form`
+margin-bottom: 20px`
+
 const Button = styled.button`
         outline: none;
         border: none;
@@ -91,4 +93,6 @@ const Button = styled.button`
         padding: 12px;
     `
 const Input = styled.input``
+
+
 

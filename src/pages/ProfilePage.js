@@ -91,7 +91,7 @@ function handleSubmit(e) {
       {
         <>
         user? <Header>
-        <GiConverseShoe style={{
+        <GiConverseShoe onClick={() => {navigate("/")}} style={{
                 marginLeft: "10px",
                 color: "white",
                 width: "30px",
@@ -112,14 +112,16 @@ function handleSubmit(e) {
     </Header>
 <SingInContainer>
   <Form onSubmit={handleSubmit}>
-    <h1>Dados Cadastrais</h1>
+    <h1>Alterar dados de cadastro</h1>
     <input  
+    placeholder="Nome"
     name="name"
     value={userData.name}
     disabled={!editardados}
     onChange={handleChange}/>
 
    <input 
+   placeholder="Email"
     type="email" 
     name="email"
     value={userData.email}
@@ -127,6 +129,7 @@ function handleSubmit(e) {
     onChange={handleChange}/>
 
    <input 
+   placeholder="Senha"
     name="password"
     disabled={!editardados}
     value={userData.password}
@@ -163,38 +166,29 @@ const SingInContainer = styled.section`
   width: 100%;
   flex-direction: column;
   align-items: center;
+  margin-top: 50px;
   h1{
     font-size: 60px;
     margin-bottom: 15%;
     margin-top: 5%;
+    font-size: 20px;
+    font-weight: 600;
+    color: #b61c1c;
   }
+
 `
 const Form = styled.form`
-display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        width: 90%;
-      input{
-        border-radius: 30px;
-        outline: none;
-        border: 1px solid #ccc;
-        padding: 15px;
-        width: 100%;
-        height: 50px;
-      }
       button{
         outline: none;
         border: none;
         border-radius: 30px;
-        background-color: #FFFFFF;
+        background-color: #b61c1c;
         font-size: 20px;
         font-weight: 600;
-        color: #b61c1c;
+        color: #FFFFFF;
         cursor: pointer;
         width: 100%;
-        padding: 12px;
+        padding: 12px;  
       }
         `
 

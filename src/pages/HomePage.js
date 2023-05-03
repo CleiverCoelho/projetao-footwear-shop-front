@@ -64,7 +64,7 @@ export default function HomePage () {
         <>
                 
         <Header>
-            <GiConverseShoe style={{
+            <GiConverseShoe onClick={() => {navigate("/")}} style={{
                     marginLeft: "10px",
                     color: "white",
                     width: "30px",
@@ -151,6 +151,7 @@ const Banner = styled.div`
  background-image: url(${banner});
   background-size: cover;
   background-position: center center;
+  margin-top: 40px;
   img{
     width: 100% ;
     margin: 0 auto;

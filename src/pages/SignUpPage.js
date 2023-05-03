@@ -112,7 +112,10 @@ display: flex;
         align-items: center;
         gap: 15px;
         width: 100%;
-        border-radius: 5px;`
+        border-radius: 5px;
+        margin-bottom:20px`
+
+
 const Input = styled.input`
         font-size: 20px;
         width: calc(100% - 30px);
