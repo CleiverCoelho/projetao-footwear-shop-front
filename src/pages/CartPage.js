@@ -2,24 +2,33 @@ import styled from "styled-components"
 import api from "../services/api";
 import {AiOutlineHeart, AiOutlineUser, AiOutlinePlusCircle, AiOutlineMinusCircle} from "react-icons/ai"
 import fotoTemplate from "./foto_template.jpg"
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios  from "axios";
-import react from "react";
+import UserContext from "../contexts/UserContext";
 
 export default function CartPage () {
     
+    const { user, login } = useContext(UserContext);
+    const navigate = useNavigate();
+
     const [cartProducts, setCartProducts] = React.useState([]);
     const [totalItens, setTotalItens] = React.useState();
     const [checkSum, setCheckSum] = React.useState(false);
     let totalPriceSum = 0;
 
+
+    if(!user){
+        navigate("/sign-in");
+      }
+
     useEffect ( () => {
+       
 
         // APENAS PARA TESTE ! ========================================
-        const config = {
-          headers: { "Authorization": `Bearer 98da1cb0-3dc9-4e32-82cb-05ce8e6e8a4c`}
-        }
+        const config =  {headers:{
+            "Authorization": `Bearer ${user.token}`
+          }}
     
         axios.get(`http://localhost:5000/cart`, config)
         .then((res) => {

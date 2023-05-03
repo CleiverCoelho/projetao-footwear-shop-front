@@ -6,9 +6,15 @@ import React from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import UserContext from "../contexts/UserContext";
+import { useContext } from "react";
+
 
 
 export default function ProductPage () {
+
+    const { user, login } = useContext(UserContext);
+
 
     const {id} = useParams();
     // const id = "645141c33b9a873d8796e3c4"
@@ -52,9 +58,9 @@ export default function ProductPage () {
 
         if(!productSize) return alert("selecione um tamanho")
 
-        const config = {
-            headers: { "Authorization": `Bearer 98da1cb0-3dc9-4e32-82cb-05ce8e6e8a4c`}
-          }
+        const config = {headers:{
+            "Authorization": `Bearer ${user.token}`
+          }}
       
         const body = {size: productSize}
         axios.post(`http://localhost:5000/cart/${id}`, body, config)

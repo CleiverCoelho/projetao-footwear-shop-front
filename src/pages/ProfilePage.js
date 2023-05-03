@@ -17,6 +17,7 @@ export function ProfilePage(){
   const [busca,setBusca] = useState("");
   const [novaSenha, setNovaSenha] = useState(userData.password)
 
+  console.log(login)
   if(!user){
     navigate("/sign-in");
   }
