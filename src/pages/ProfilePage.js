@@ -26,58 +26,15 @@ export function ProfilePage(){
     login({});
     navigate("/");
 }
-
-
-
-
 function definirbusca(e){
   setBusca(e.target.value);
 }
-
 function handleSubmit(e) {
   e.preventDefault();
 }
-
-
-   
-  useEffect(() => {
-    axios.get("http://localhost:5000/user", {headers:{
-      "Authorization": `Bearer ${user.token}`
-    }})
-    .then(
-      (res) => {
-        setUserData(res.data);
-
-      }
-    )
-    .catch(
-      (err) => {alert(err.response.status)}
-    )
-  }, [])
-
   function handleChange(e) {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
-  }
-  
-    function salvarmudançasdados(e){
-      e.preventDefault();
-      setLoading(true);
-      let novosdados = {name: userData.name, password: userData.password, email: userData.email};
-      console.log(novosdados)
-      axios.put("http://localhost:5000/user", novosdados,  {headers:{
-        "Authorization": `Bearer ${user.token}`
-      }})
-      .then(
-        (res) => {axios.get("http://localhost:5000/user", {headers:{
-          "Authorization": `Bearer ${user.token}`
-        }})
-        .then(
-          (res) => {
-            setUserData(res.data);
-              function handleChange(e) {
   setUserData({ ...userData, [e.target.name]: e.target.value });
 }
-
   function salvarmudançasdados(e){
     e.preventDefault();
     setLoading(true);
@@ -93,8 +50,6 @@ function handleSubmit(e) {
       .then(
         (res) => {
           setUserData(res.data);
-          console.log(userData)
-          alert("Alterações salvas com sucesso!")
   
         }
       )
@@ -107,19 +62,20 @@ function handleSubmit(e) {
       (err) => {alert(err.response.status); setEditarDados(true); setLoading(false)}
     )
   }
-    
-          }
-        )
-        .catch(
-          (err) => {alert(err.response.status)}
-        );setEditarDados(true); setLoading(false)}
-      )
-      .catch(
-        //tbm altera editar
-        (err) => {alert(err.response.status); setEditarDados(true); setLoading(false)}
-      )
-    }
-
+   
+  useEffect(() => {
+    axios.get("http://localhost:5000/user", {headers:{
+      "Authorization": `Bearer ${user.token}`
+    }})
+    .then(
+      (res) => {
+        setUserData(res.data);
+      }
+    )
+    .catch(
+      (err) => {alert(err.response.status)}
+    )
+  }, [])
     return(
       <>
       {
