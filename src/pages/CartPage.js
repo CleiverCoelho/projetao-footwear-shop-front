@@ -24,8 +24,6 @@ export default function CartPage () {
 
     useEffect ( () => {
        
-
-        // APENAS PARA TESTE ! ========================================
         const config =  {headers:{
             "Authorization": `Bearer ${user.token}`
           }}
@@ -43,6 +41,27 @@ export default function CartPage () {
         })
     
     }, []);
+
+    function attPedidos(cartProducts){
+        const config =  {headers:{
+            "Authorization": `Bearer ${user.token}`
+          }};
+          console.log(cartProducts)
+        
+        const body = ({ produtos: cartProducts });
+        console.log(body)
+        axios.post(`http://localhost:5000/user`, body, config)
+        .then((res)=> {
+            console.log(res)
+            alert('Pedido realizado com sucesso!')
+            setCartProducts([])
+            setTotalItens(0)
+
+        })
+        .catch((err) => {
+            alert(err.response.data);
+        })
+    }
         
     return (
         <CartPageContainer>
@@ -87,7 +106,7 @@ export default function CartPage () {
                 </CartInfos>
                 <DivisionLine></DivisionLine>
                 <Buy>
-                    <div>
+                    <div onClick={() => attPedidos(cartProducts)}>
                         Finalizar Compra               
                     </div>
                 </Buy>

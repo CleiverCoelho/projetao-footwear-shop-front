@@ -15,9 +15,8 @@ export function ProfilePage(){
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [busca,setBusca] = useState("");
-  const [novaSenha, setNovaSenha] = useState(userData.password)
 
-  console.log(login)
+
   if(!user){
     navigate("/sign-in");
   }
@@ -40,7 +39,42 @@ function handleSubmit(e) {
 }
 
 
+   
+  useEffect(() => {
+    axios.get("http://localhost:5000/user", {headers:{
+      "Authorization": `Bearer ${user.token}`
+    }})
+    .then(
+      (res) => {
+        setUserData(res.data);
+
+      }
+    )
+    .catch(
+      (err) => {alert(err.response.status)}
+    )
+  }, [])
+
   function handleChange(e) {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  }
+  
+    function salvarmudançasdados(e){
+      e.preventDefault();
+      setLoading(true);
+      let novosdados = {name: userData.name, password: userData.password, email: userData.email};
+      console.log(novosdados)
+      axios.put("http://localhost:5000/user", novosdados,  {headers:{
+        "Authorization": `Bearer ${user.token}`
+      }})
+      .then(
+        (res) => {axios.get("http://localhost:5000/user", {headers:{
+          "Authorization": `Bearer ${user.token}`
+        }})
+        .then(
+          (res) => {
+            setUserData(res.data);
+              function handleChange(e) {
   setUserData({ ...userData, [e.target.name]: e.target.value });
 }
 
@@ -59,6 +93,8 @@ function handleSubmit(e) {
       .then(
         (res) => {
           setUserData(res.data);
+          console.log(userData)
+          alert("Alterações salvas com sucesso!")
   
         }
       )
@@ -71,22 +107,18 @@ function handleSubmit(e) {
       (err) => {alert(err.response.status); setEditarDados(true); setLoading(false)}
     )
   }
-   
-  useEffect(() => {
-    axios.get("http://localhost:5000/user", {headers:{
-      "Authorization": `Bearer ${user.token}`
-    }})
-    .then(
-      (res) => {
-        setUserData(res.data);
-
-      }
-    )
-    .catch(
-      (err) => {alert(err.response.status)}
-    )
-  }, [])
-
+    
+          }
+        )
+        .catch(
+          (err) => {alert(err.response.status)}
+        );setEditarDados(true); setLoading(false)}
+      )
+      .catch(
+        //tbm altera editar
+        (err) => {alert(err.response.status); setEditarDados(true); setLoading(false)}
+      )
+    }
 
     return(
       <>
@@ -118,7 +150,6 @@ function handleSubmit(e) {
     <input  
     placeholder="Nome"
     name="name"
-    value={userData.name}
     disabled={!editardados}
     onChange={handleChange}/>
 
@@ -126,7 +157,6 @@ function handleSubmit(e) {
    placeholder="Email"
     type="email" 
     name="email"
-    value={userData.email}
     disabled={!editardados}
     onChange={handleChange}/>
 
@@ -135,7 +165,6 @@ function handleSubmit(e) {
     name="password"
     type="password"
     disabled={!editardados}
-    value={userData.password}
     onChange={handleChange}
     />
     {
@@ -143,16 +172,7 @@ function handleSubmit(e) {
         
     }
     </Form>
-    <h1>Pedidos</h1>
-    <ListadePedidos>
-        {
-            userData.pedidos.map(
-                (p) => <Pedido imagem={p.imagem} quantidade = {p.quantidade} valor = {p.valor} nome={p.nome} marca={p.brand} />
-            )
-        }
-    </ListadePedidos>
-
-    
+   
   
 </SingInContainer>
 : <></>
@@ -261,3 +281,24 @@ input{
     padding: 2%;
     color: black;
 }`
+
+const ProductName = styled.div`
+    width: 85%;
+    /* background-color: black; */
+    color: black;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 10px;
+`
+
+const ProductInfo = styled.div`
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 4px;
+    color: black;
+
+    span {
+        font-weight: 600;
+        color: black;
+    }
+`
