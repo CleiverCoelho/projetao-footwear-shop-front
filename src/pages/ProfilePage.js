@@ -64,7 +64,7 @@ function handleSubmit(e) {
   }
    
   useEffect(() => {
-    axios.get("http://localhost:5000/user", {headers:{
+    axios.get("https://footwearshop-api.onrender.com/user", {headers:{
       "Authorization": `Bearer ${user.token}`
     }})
     .then(

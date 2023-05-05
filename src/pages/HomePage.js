@@ -30,7 +30,7 @@ export default function HomePage () {
     
     function buscar(e){
         e.preventDefault();
-        axios.get("http://localhost:5000/products", {name: busca})
+        axios.get("https://footwearshop-api.onrender.com/products", {name: busca})
        .then(
         (res) => {setProdutos(res.data);}
        )
@@ -41,7 +41,7 @@ export default function HomePage () {
     
 
     useEffect(() => {
-    axios.get("http://localhost:5000/products")
+    axios.get("https://footwearshop-api.onrender.com/products")
       .then(
           (res) => {setProdutos(res.data)}
        )
@@ -51,7 +51,7 @@ export default function HomePage () {
    }, [])
 
    useEffect(() =>
-      {axios.get(`http://localhost:5000/products/${marca}`)
+      {axios.get(`https://footwearshop-api.onrender.com/products/${marca}`)
         .then(
            (res) => {setProdutos(res.data)}
           )

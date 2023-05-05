@@ -28,7 +28,7 @@ export default function SignUpPage() {
   console.log(formData);
     let cadastro = {...formData};
     delete cadastro.confirmPassword;
-    axios.post("http://localhost:5000/sign-up", cadastro)
+    axios.post("https://footwearshop-api.onrender.com/sign-up", cadastro)
     .then(
       (res) => {navigate("/sign-in")}
     )

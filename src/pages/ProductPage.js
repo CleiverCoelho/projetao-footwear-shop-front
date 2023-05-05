@@ -28,7 +28,7 @@ export default function ProductPage () {
     useEffect ( () => {
         // const {id} = useParams();
         console.log(id)
-        axios.get(`http://localhost:5000/product/${id}`)
+        axios.get(`https://footwearshop-api.onrender.com/product/${id}`)
         .then((res) => {
             console.log(res);
             setProduct(res.data);
@@ -63,7 +63,7 @@ export default function ProductPage () {
           }}
       
         const body = {size: productSize}
-        axios.post(`http://localhost:5000/cart/${id}`, body, config)
+        axios.post(`https://footwearshop-api.onrender.com/cart/${id}`, body, config)
         .then((res) => {
             console.log(res); 
             alert("item adicionado no carrinho!")           

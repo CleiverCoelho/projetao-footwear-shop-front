@@ -28,7 +28,7 @@ export default function CartPage () {
             "Authorization": `Bearer ${user.token}`
           }}
     
-        axios.get(`http://localhost:5000/cart`, config)
+        axios.get(`https://footwearshop-api.onrender.com/cart`, config)
         .then((res) => {
             // console.log(res);x
             const array = [...res.data];
@@ -50,7 +50,7 @@ export default function CartPage () {
         
         const body = ({ produtos: cartProducts });
         console.log(body)
-        axios.post(`http://localhost:5000/user`, body, config)
+        axios.post(`https://footwearshop-api.onrender.com/user`, body, config)
         .then((res)=> {
             console.log(res)
             alert('Pedido realizado com sucesso!')
