@@ -105,6 +105,7 @@ function handleSubmit(e) {
     <h1>Alterar dados de cadastro</h1>
     <input  
     placeholder="Nome"
+    type="name"
     name="name"
     disabled={!editardados}
     onChange={handleChange}/>
